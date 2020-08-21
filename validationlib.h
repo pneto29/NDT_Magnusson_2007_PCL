@@ -1,9 +1,7 @@
 /**
  * validationlib.h
  * Artur Rodrigues Rocha Neto
- * Agrupando funcoes em comuns nos metodos de referencia em unico .h
- * OBS:
- * 1- como salvar nuvem em arquivo usando PCL: pcl::io::savePCDFileBinary(argv[3], *icp_cloud);
+ * Grouping common functions in reference methods in a single .h
  */
 
 #include <limits>
