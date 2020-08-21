@@ -102,7 +102,7 @@ main (int argc, char** argv)
     // Calculating required rigid transform to align the input cloud to the target cloud.
     pcl::PointCloud<pcl::PointXYZ>::Ptr output_cloud (new pcl::PointCloud<pcl::PointXYZ>);
     ndt.align (*output_cloud);
-
+    // Calculation of final RMSE
     double rms = computeCloudRMS(target_cloud, output_cloud, std::numeric_limits<double>::max ());
     std::cout << "RMS: " << rms << std::endl;
    
@@ -110,25 +110,16 @@ main (int argc, char** argv)
     pcl::transformPointCloud (*input_cloud, *output_cloud, ndt.getFinalTransformation ());
     Eigen::Matrix4f rotation_matrix;
     rotation_matrix=ndt.getFinalTransformation ();
-    double elem1, elem2, elem3, angle123,result;
-    elem1 = rotation_matrix(0,0);
+  
+      //Calculation of rotation after alignment    
+        double elem1 = rotation_matrix(0, 0); // r_11
+        double elem2 = rotation_matrix(1, 1); // r_22
+        double elem3 = rotation_matrix(2, 2); // r_33
+        double angle123 = (elem1 + elem2 + elem3 - 1) / 2.0; // Axis–angle representation==(sum of the main diagonal - 1)/2
+        double result = acos (angle123) * 180.0 / PI;
 
-    elem2 = rotation_matrix(1,1);
-    elem3= rotation_matrix(2,2);
-    angle123= (elem1+elem2+elem3-1)/2;
-    result = acos (angle123) * 180.0 / PI;
-
-    double trans1, trans2, trans3, result2, trans12, trans22, trans32;
-    trans1 = rotation_matrix(0,3);
-    trans2 = rotation_matrix(1,3);
-    trans3 = rotation_matrix(2,3);
-    trans12= trans1*trans1;
-    trans22= trans2*trans2;
-    trans32= trans3*trans3;
-    result2=sqrt(trans12+trans22+trans32);
-    std::cout << "ROTAÇÃO: " << result << std::endl;
-    std::cout << "TRANSLAÇÃO: " << result2 << std::endl;
-    printf("Tempo:%f \n",(clock() - tempo) / (double)CLOCKS_PER_SEC);
+    std::cout << "ROTATION: " << result << std::endl;
+    printf("TIME:%f \n",(clock() - tempo) / (double)CLOCKS_PER_SEC);
     cout << "-------------------------------------------------------" << endl;
 
     // Initializing point cloud visualizer
@@ -136,7 +127,7 @@ main (int argc, char** argv)
             viewer_final (new pcl::visualization::PCLVisualizer ("3D Viewer"));
     viewer_final->setBackgroundColor (255, 255, 255);
 
-    // Coloring and visualizing target cloud (red).
+    // Coloring and visualizing target cloud (blue).
     pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ>
             target_color (target_cloud, 0, 0, 255);
     viewer_final->addPointCloud<pcl::PointXYZ> (target_cloud, target_color, "target cloud");
