@@ -1,6 +1,6 @@
 #include "validationlib.h"
 double computeCloudRMS(pcl::PointCloud<pcl::PointXYZ>::ConstPtr target, pcl::PointCloud<pcl::PointXYZ>::ConstPtr source, double max_range){
-
+    //double computeCloudRMS(pcl::PointCloud<pcl::PointXYZ>::ConstPtr target, pcl::PointCloud<pcl::PointXYZ>::ConstPtr source){
 
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud(target);
@@ -69,9 +69,13 @@ main (int argc, char** argv)
     approximate_voxel_filter.setInputCloud (input_cloud);
     approximate_voxel_filter.filter (*filtered_cloud);
 
+    // Initializing Normal Distributions Transform (NDT).
     pcl::NormalDistributionsTransform<pcl::PointXYZ, pcl::PointXYZ> ndt;
 
-
+    // Setting scale dependent NDT parameters
+    // Setting minimum transformation difference for termination condition.
+    //ndt.setTransformationEpsilon (0.01);
+    // Setting maximum step size for More-Thuente line search.
     float step = atof(argv[3]);
     float resolution = atof(argv[4]);
     int iteration = atoi(argv[5]);
@@ -85,13 +89,23 @@ main (int argc, char** argv)
     // Setting point cloud to be aligned to.
     ndt.setInputTarget (target_cloud);
 
-   
+    // Set initial alignment estimate found using robot odometry.
+//    Eigen::AngleAxisf init_rotation (0.6931, Eigen::Vector3f::UnitZ ());
+//    Eigen::Translation3f init_translation (1.79387, 0.720047, 0);
+//    Eigen::Matrix4f init_guess = (init_translation * init_rotation).matrix ();
+
+    //    Eigen::AngleAxisf init_rotation (0.0174, Eigen::Vector3f::UnitZ ());
+//    Eigen::Translation3f init_translation (1.79387, 0.720047, 0);
+//    Eigen::Matrix3f init_guess = (init_translation * init_rotation).matrix ();
+
+
     // Calculating required rigid transform to align the input cloud to the target cloud.
     pcl::PointCloud<pcl::PointXYZ>::Ptr output_cloud (new pcl::PointCloud<pcl::PointXYZ>);
     ndt.align (*output_cloud);
 
     double rms = computeCloudRMS(target_cloud, output_cloud, std::numeric_limits<double>::max ());
     std::cout << "RMS: " << rms << std::endl;
+   
     // Transforming unfiltered, input cloud using found transform.
     pcl::transformPointCloud (*input_cloud, *output_cloud, ndt.getFinalTransformation ());
     Eigen::Matrix4f rotation_matrix;
@@ -112,11 +126,10 @@ main (int argc, char** argv)
     trans22= trans2*trans2;
     trans32= trans3*trans3;
     result2=sqrt(trans12+trans22+trans32);
-    std::cout << "ROTATION: " << result << std::endl;
-    std::cout << "TRANSLATION: " << result2 << std::endl;
+    std::cout << "ROTAÇÃO: " << result << std::endl;
+    std::cout << "TRANSLAÇÃO: " << result2 << std::endl;
     printf("Tempo:%f \n",(clock() - tempo) / (double)CLOCKS_PER_SEC);
     cout << "-------------------------------------------------------" << endl;
-
 
     // Initializing point cloud visualizer
     boost::shared_ptr<pcl::visualization::PCLVisualizer>
