@@ -20,7 +20,7 @@ cmake ..
 * Run make
 make
 * When the program has been built, run: 
-./random_fixed argv[1] argv[2] argv[3]
+./ndt argv[1] argv[2] argv[3] argv[4] argv[5] 
 
 ## Parameters ##
 * argv[1]: target cloud
