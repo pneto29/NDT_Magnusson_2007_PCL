@@ -1,3 +1,14 @@
+/*********************************************************************************************************************
+Main Function for point cloud registration with Normal DIstribution transform
+Last modified: August 24, 2020
+
+Reference:
+Magnusson, M. (2009). The Three-Dimensional Normal-Distributions Transform — 
+an Efﬁcient Representation for Registration, Surface Analysis, and Loop Detection. PhD thesis, Orebro University.
+
+Responsible for implementation: Polycarpo Souza Neto
+Documentation: https://pointclouds.org/documentation/classpcl_1_1_normal_distributions_transform.html#details
+**********************************************************************************************************************/
 #include "validationlib.h"
 double computeCloudRMS(pcl::PointCloud<pcl::PointXYZ>::ConstPtr target, pcl::PointCloud<pcl::PointXYZ>::ConstPtr source, double max_range){
     //double computeCloudRMS(pcl::PointCloud<pcl::PointXYZ>::ConstPtr target, pcl::PointCloud<pcl::PointXYZ>::ConstPtr source){
