@@ -1,1 +1,32 @@
-# The NDT algorithm is a registration algorithm that uses standard optimization techniques applied to statistical models of 3D points to determine the most probable registration between two point clouds. For more information on the inner workings of the NDT algorithm, see Dr. Martin Magnusson’s doctoral thesis, “The Three-Dimensional Normal Distributions Transform – an Efficient Representation for Registration, Surface Analysis, and Loop Detection.”
+# NDT 3D #
+
+This repository contains an implementation of the Normal Distribution Transform. 
+
+## Dependencies ##
+
+The dependencies are header-only and are all included in the ext directory. As a consequence, there is nothing to do.
+
+* PCL (Point cloud library) - 1.7 version
+* Linux Ubuntu 16.04 or 18.04
+
+## Usage ##
+
+* Create a folder named build (for example)
+mkdir build
+* Enter folder
+cd build/
+* Run "CmakeLists.txt" which is a path before build
+cmake ..
+* Run make
+make
+* When the program has been built, run: 
+./random_fixed argv[1] argv[2] argv[3]
+
+## Parameters ##
+* argv[1]: target cloud
+* argv[2]: source cloud
+* argv[3]: Setting maximum step size for More-Thuente line search.
+* argv[4]: Setting max number of registration iterations
+* argv[5]: Setting Resolution of NDT grid structure (VoxelGridCovariance).
+## Reference ##
+
