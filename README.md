@@ -26,7 +26,7 @@ make
 * argv[1]: target cloud
 * argv[2]: source cloud
 * argv[3]: Setting maximum step size for More-Thuente line search.
-* argv[4]: Setting max number of registration iterations
-* argv[5]: Setting Resolution of NDT grid structure (VoxelGridCovariance).
+* argv[4]: Setting Resolution of NDT grid structure (VoxelGridCovariance).
+* argv[5]: Setting max number of registration iterations
 ## Reference ##
 
