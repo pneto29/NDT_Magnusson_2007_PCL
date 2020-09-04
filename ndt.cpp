@@ -10,6 +10,10 @@ Responsible for implementation: ***
 Documentation: https://pointclouds.org/documentation/classpcl_1_1_normal_distributions_transform.html#details
 **********************************************************************************************************************/
 #include "validationlib.h"
+#include <pcl/filters/statistical_outlier_removal.h>
+#include <pcl/filters/voxel_grid.h>
+#include <pcl/filters/approximate_voxel_grid.h>
+
 double computeCloudRMS(pcl::PointCloud<pcl::PointXYZ>::ConstPtr target, pcl::PointCloud<pcl::PointXYZ>::ConstPtr source, double max_range){
     //double computeCloudRMS(pcl::PointCloud<pcl::PointXYZ>::ConstPtr target, pcl::PointCloud<pcl::PointXYZ>::ConstPtr source){
 
