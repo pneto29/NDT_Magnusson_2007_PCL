@@ -6,7 +6,7 @@ Reference:
 Magnusson, M. (2009). The Three-Dimensional Normal-Distributions Transform — 
 an Efﬁcient Representation for Registration, Surface Analysis, and Loop Detection. PhD thesis, Orebro University.
 
-Responsible for implementation: Polycarpo Souza Neto
+Responsible for implementation: ***
 Documentation: https://pointclouds.org/documentation/classpcl_1_1_normal_distributions_transform.html#details
 **********************************************************************************************************************/
 #include "validationlib.h"
