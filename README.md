@@ -28,5 +28,7 @@ make
 * argv[3]: Setting maximum step size for More-Thuente line search.
 * argv[4]: Setting Resolution of NDT grid structure (VoxelGridCovariance).
 * argv[5]: Setting max number of registration iterations
+## Suggestion of parameters ##
+According to the PCL documentation, we can use the following parameters. Sets outlier_ratio_ to 0.35, step_size_ to 0.05 and resolution_ to 1.0. 
 ## Reference ##
 
